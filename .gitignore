@@ -1,3 +1,46 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.swp
+*.swo
+*.swn
+
+# Virtual environment
 venv/
 env/
+
+# Environment variables
 .env
+*.env
+
+# Logs and debug files
+*.log
+logs/
+debug.log
+
+# Database and migrations
+db.sqlite3
+instance/
+migrations/
+
+# Dependency directories
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+*.iml
+
+# Git files
+*.orig
+*.rej
+
+# Docker and CI/CD
+docker-compose.override.yml

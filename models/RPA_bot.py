@@ -1,0 +1,12 @@
+class RpaBot(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.String(50), nullable=False)
+    last_active_at = db.Column(db.DateTime, nullable=True)
+    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+    subdomain_id = db.Column(db.Integer, db.ForeignKey('subdomain.id'), nullable=False)
+    total_orders_processed = db.Column(db.Integer, nullable=False, default=0)
+    total_errors = db.Column(db.Integer, nullable=False, default=0)
+    error_rate = db.Column(db.Float, nullable=False, default=0.0)
+    subdomain = db.relationship('Subdomain', backref=db.backref('rpabot', uselist=False, cascade="all, delete"))

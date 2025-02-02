@@ -1,6 +1,6 @@
 import google.generativeai as genai
 import json
-from config import Config
+from utils.config import Config
 
 genai.configure(api_key=Config.GEMINI_API_KEY)
 
