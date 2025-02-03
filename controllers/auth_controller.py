@@ -1,11 +1,14 @@
 import datetime
 import jwt
-from flask import request, jsonify, make_response
+from flask import request, jsonify, make_response, Blueprint
 from models.company import Company
 from models.user import User
 from utils.db import db
 from utils.config import Config
 from werkzeug.security import check_password_hash
+
+# Create a Blueprint for authentication
+auth_bp = Blueprint("auth", __name__)
 
 def generate_token(entity, is_company=False):
     """Generate JWT token for either company or user."""
@@ -86,7 +89,6 @@ def register_company():
 
     response = make_response(jsonify(response_data))
     response.set_cookie("auth_token", token, httponly=True, secure=True)
-
     return response, 201
 
 def register_user():
@@ -98,8 +100,7 @@ def register_user():
     last_name = data.get('last_name')
     role = data.get('role')
     company_id = data.get('company_id')
-    print(email,password,first_name,last_name, role,company_id)
-
+    
     if User.query.filter_by(email=email).first():
         return jsonify({"message": "Email already exists"}), 400
 
@@ -123,6 +124,4 @@ def register_user():
 
     response = make_response(jsonify(response_data))
     response.set_cookie("auth_token", token, httponly=True, secure=True)
-
-    return  response,201
-
+    return response, 201

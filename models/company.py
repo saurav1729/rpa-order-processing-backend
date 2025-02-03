@@ -12,7 +12,7 @@ class Company(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
     users = db.relationship('User', backref='company', lazy=True, cascade="all, delete")
-    subdomains = db.relationship('Subdomain', backref='company', lazy=True, cascade="all, delete")
+    subdomains = db.relationship('Subdomain', back_populates='company', lazy=True, cascade="all, delete")  # Corrected
 
     def serialize(self):
         return {

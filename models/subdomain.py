@@ -9,7 +9,7 @@ class Subdomain(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
-    company = db.relationship('Company', backref=db.backref('subdomains', lazy=True))
+    company = db.relationship('Company', back_populates='subdomains')
 
     def __repr__(self):
         return f"<Subdomain(id={self.id}, name='{self.name}', company_id={self.company_id}, email='{self.email}', oauth_token='{self.oauth_token}', created_at={self.created_at}, updated_at={self.updated_at})>"
