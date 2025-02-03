@@ -1,14 +1,14 @@
 from flask import jsonify, request
-from models.subdomain import Subdomain
+from models.Connection import Connection
 from utils.db import db
 import requests
 
-def get_subdomains():
-    subdomains = Subdomain.query.filter_by(user_id=user_id).all()
-    return jsonify([{"id": sub.id, "name": sub.name, "email": sub.email} for sub in subdomains]), 200
+def get_Connections():
+    Connections = Connection.query.filter_by(user_id=user_id).all()
+    return jsonify([{"id": sub.id, "name": sub.name, "email": sub.email} for sub in Connections]), 200
 
-def add_subdomain(current_company):
-    print("inside add_subdomain")
+def add_Connection(current_company):
+    print("inside add_Connection")
     data = request.get_json()
     data['company_id'] = current_company.id  # Use current_company.id to associate with the company
     oauth_token = data.get('oauth_token')
@@ -31,17 +31,17 @@ def add_subdomain(current_company):
     if not all([name, email]):
         return jsonify({"error": "Missing user info"}), 400
     
-    # Create new subdomain entry
-    # Create new subdomain entry
-    new_subdomain = Subdomain(name=name, oauth_token=oauth_token, company_id=current_company.id)
+    # Create new Connection entry
+    # Create new Connection entry
+    new_Connection = Connection(name=name, oauth_token=oauth_token, company_id=current_company.id)
     
-    # Add the new subdomain to the database
-    db.session.add(new_subdomain)
+    # Add the new Connection to the database
+    db.session.add(new_Connection)
     db.session.commit()
     
-    return jsonify({"message": "Subdomain created!", "id": new_subdomain.id}), 201
+    return jsonify({"message": "Connection created!", "id": new_Connection.id}), 201
 
-    print("inside add_subdomain")
+    print("inside add_Connection")
     data = request.get_json()
     data['company_id'] = current_company.id
     oauth_token = data.get('oauth_token')
@@ -65,14 +65,14 @@ def add_subdomain(current_company):
     if not all([name, email]):
         return jsonify({"error": "Missing user info"}), 400
     
-    # Create new subdomain entry
-    new_subdomain = ubdomain(name=name, email=email, oauth_token=oauth_token, company_id=current_company.id)
+    # Create new Connection entry
+    new_Connection = Connection(name=name, email=email, oauth_token=oauth_token, company_id=current_company.id)
     
-    # Add the new subdomain to the database
-    db.session.add(new_subdomain)
+    # Add the new Connection to the database
+    db.session.add(new_Connection)
     db.session.commit()
     
-    return jsonify({"message": "Subdomain created!", "id": new_subdomain.id}), 201
+    return jsonify({"message": "Connection created!", "id": new_Connection.id}), 201
 
 
 def get_user_info_from_oauth(oauth_token):
@@ -86,24 +86,24 @@ def get_user_info_from_oauth(oauth_token):
         return None
 
 
-def delete_subdomain(id):
-    subdomain = Subdomain.query.filter_by(id=id, user_id=user_id).first()
-    if subdomain:
-        db.session.delete(subdomain)
+def delete_Connection(id):
+    Connection = Connection.query.filter_by(id=id, user_id=user_id).first()
+    if Connection:
+        db.session.delete(Connection)
         db.session.commit()
-        return jsonify({"message": "Subdomain deleted"}), 200
-    return jsonify({"error": "Subdomain not found"}), 404
+        return jsonify({"message": "Connection deleted"}), 200
+    return jsonify({"error": "Connection not found"}), 404
 
-def update_subdomain(id):
-    subdomain = Subdomain.query.filter_by(id=id, user_id=user_id).first()
-    if not subdomain:
-        return jsonify({"error": "Subdomain not found"}), 404
+def update_Connection(id):
+    Connection = Connection.query.filter_by(id=id, user_id=user_id).first()
+    if not Connection:
+        return jsonify({"error": "Connection not found"}), 404
     
     data = request.json
-    subdomain.name = data.get('name', subdomain.name)
-    subdomain.email = data.get('email', subdomain.email)
-    subdomain.oauth_token = data.get('oauth_token', subdomain.oauth_token)
+    Connection.name = data.get('name', Connection.name)
+    Connection.email = data.get('email', Connection.email)
+    Connection.oauth_token = data.get('oauth_token', Connection.oauth_token)
     
     db.session.commit()
-    return jsonify({"message": "Subdomain updated", "id": subdomain.id}), 200
+    return jsonify({"message": "Connection updated", "id": Connection.id}), 200
 

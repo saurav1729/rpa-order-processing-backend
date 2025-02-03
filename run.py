@@ -3,11 +3,15 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from utils.config import Config
+from flask_cors import CORS
 # from routes import auth_routes, connection_routes, email_routes
 from utils.db import db
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+
+CORS(app) 
 
 # Initialize DB and Migrate
 db.init_app(app)  
@@ -29,12 +33,12 @@ except Exception as e:
 
 from routes.auth_routes import auth_bp as auth_routes
 from routes.user_routes import user_bp as user_routes
-from routes.subdomain_routes import subdomain_bp as subdomain_routes
+from routes.Connection_routes import Connection_bp as Connection_routes
 from app.routes import api as api
 
 app.register_blueprint(auth_routes, url_prefix='/auth')
 app.register_blueprint(user_routes, url_prefix='/company')
-app.register_blueprint(subdomain_routes, url_prefix='/company')
+app.register_blueprint(Connection_routes, url_prefix='/company')
 app.register_blueprint(api, url_prefix='/api')
 if __name__ == "__main__":
     port = int(Config.PORT) if Config.PORT else 8080  

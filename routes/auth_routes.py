@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, Flask, redirect, request, jsonify
 from controllers.auth_controller import register_company, unified_login
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
@@ -8,7 +8,7 @@ import os
 
 auth_bp = Blueprint('auth_routes', __name__)
 
-LIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 REDIRECT_URI = os.getenv('REDIRECT_URI')
 
