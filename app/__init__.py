@@ -11,7 +11,7 @@ def create_app():
 
     app.config.from_object('config.Config')
 
-    from app.routes import api
+    from routes.index import api
     # from routes.auth_routes import auth_bp
     # from app.routes.connection_routes import connection_bp
     # from app.routes.email_routes import email_bp 
