@@ -60,7 +60,7 @@ def auth_google_callback():
         )
 
         # Return token to frontend
-        return redirect(f'http://localhost:5173?token={token_response["access_token"]}')
+        return redirect(f'https://astra-rpa.vercel.app/u/Connection?token={token_response["access_token"]}')
     
     except Exception as e:
         return jsonify({'error': str(e)}), 400

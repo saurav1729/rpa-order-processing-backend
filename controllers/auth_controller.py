@@ -21,7 +21,9 @@ def generate_token(entity, is_company=False):
     if not is_company:
         payload["company_id"] = entity.company_id
         payload["role"] = entity.role
-    return jwt.encode(payload, Config.SECRET_KEY, algorithm="HS256")
+    
+    return jwt.encode(payload, Config.SECRET_KEY, algorithm="HS256")  # No alias needed
+
 
 def unified_login():
     """Login for both company and user"""
